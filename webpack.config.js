@@ -1,12 +1,16 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
-        main: './src/index.js'
+        main: './src/index.tsx'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'build.js'
+    },
+    resolve: {
+        extensions: [".ts", ".tsx", ".js"]
     },
     module: {
         rules: [
@@ -20,6 +24,20 @@ module.exports = {
                         plugins: ['@babel/proposal-class-properties']
                     }
                 }
+            },
+            {
+                test: /\.ts(x?)$/,
+                exclude: /node_modules/,
+                use: [
+                    {
+                        loader: "ts-loader"
+                    }
+                ]
+            },
+            {
+                enforce: "pre",
+                test: /\.js$/,
+                loader: "source-map-loader"
             },
             {
                 test: /\.less$/,
@@ -42,5 +60,10 @@ module.exports = {
         contentBase: path.join(__dirname, 'dist'),
         port: 3000,
         overlay: true
-    }
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './src/index.html'
+        })
+    ]
 };
