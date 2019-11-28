@@ -3,14 +3,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
-        main: './src/index.tsx'
+        main: './src/index.js'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'build.js'
-    },
-    resolve: {
-        extensions: [".ts", ".tsx", ".js"]
     },
     module: {
         rules: [
@@ -24,20 +21,6 @@ module.exports = {
                         plugins: ['@babel/proposal-class-properties']
                     }
                 }
-            },
-            {
-                test: /\.ts(x?)$/,
-                exclude: /node_modules/,
-                use: [
-                    {
-                        loader: "ts-loader"
-                    }
-                ]
-            },
-            {
-                enforce: "pre",
-                test: /\.js$/,
-                loader: "source-map-loader"
             },
             {
                 test: /\.less$/,
